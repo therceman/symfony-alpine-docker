@@ -28,15 +28,14 @@ APACHE_SYSTEM_PORT=8080
 
 ## Setup
 
-### 1) Initialization
+### Initialization
 1) Build and run Docker container
 ```bash
 docker-compose up -d --build
 ```
-
 2) Connect to Docker container
 ```bash
-docker-compose run --rm php /bin/sh
+docker-compose run --rm app /bin/sh
 ```
 
 3) Check that Docker container meets Symfony requirements
@@ -44,10 +43,10 @@ docker-compose run --rm php /bin/sh
 symfony check:requirements
 ```
 
-### 2) Symfony Installation
+### Symfony Installation
 
-1) Select configuration and execute command (from Docker container)
-* Run this if you are building a traditional web application
+4) Select configuration and execute one of the following commands
+* Run this if you are building a traditional web application (full Symfony Package)
 ```
 symfony new ./ --webapp
 ```
@@ -57,36 +56,56 @@ symfony new ./ --webapp
 symfony new ./
 ```
 
-* Run this if you want to install specific version by providing `--version` parameter.<br>
+* Run this if you want to install specific version using `--version` parameter.<br>
 Example: `lts`, `4.4` or `next` (version in active development)
 ```bash
 symfony new ./ --version=5.4
 ```
 
-2) Exit from container terminal by executing `exit` command
+5) Exit from Docker container
+```bash
+exit
+```
 
-### 3) Speed Optimization
+### Speed Optimization
 
-1) Open `docker-compose.yml` and uncomment 2 lines under `volumes:`
+6) Open `docker-compose.yml` and uncomment 3 lines under `volumes:`
 ```
     volumes:
-      - vendor-var-vol:/var/www/html/var
-      - vendor-var-vol:/var/www/html/vendor
+      - var:/var/www/html/var
+      - vendor:/var/www/html/vendor
+      - node_modules:/var/www/html/node_modules
       - ./app:/var/www/html/
 ```
-2) Delete `app/var` and  folder
-3) Delete `app/vendor` folder
-4) Rebuild Docker Container
+7) Delete `app/var` folder
+8) Delete `app/vendor` folder
+9) Reinstall Composer dependencies
+```bash
+docker-compose run --rm app composer install
+```
+10) Rebuild and rerun Docker container
 ```bash
 docker-compose up -d --build
 ```
-4) Reinstall Composer dependencies
+
+### Extra Steps (only for full Symfony Package)
+If you have installed full Symfony Package using cmd `symfony new ./ --webapp`<br>
+You will need to install Node.js dependencies, build Webpack bundle and start Watcher.
+1) Install Node.js dependencies using `yarn` or `npm`
 ```bash
-docker-compose run --rm php composer install
+docker-compose run --rm app yarn install
+```
+2) Build Webpack bundle
+```bash
+docker-compose run --rm app yarn encore dev
+```
+**Note:** You can tell Webpack to watch for file changes and rebuild webpack on update
+```bash
+docker-compose run --rm app yarn encore dev --watch
 ```
 
-### 4) Usage
+## View
 
-Open http://localhost:8080
+Navigate to http://localhost:8080 to see your app
 
 **Note:** You can configure host port in `.env` file
