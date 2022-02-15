@@ -26,29 +26,27 @@ NODEJS_PACKAGE_MANAGER=yarn
 APACHE_SYSTEM_PORT=8080
 ```
 
-## Build
+## Setup
 
+### 1) Initialization
+1) Build and Run Docker container
 ```bash
 docker-compose up -d --build
 ```
 
-## Symfony Installation
-
-### Initialization
-
-1) Connect to Docker container
+2) Connect to Docker container
 ```bash
 docker-compose run --rm php /bin/sh
 ```
 
-2) Check that container meets Symfony Requirements
+3) Check that container meets Symfony Requirements
 ```bash
 symfony check:requirements
 ```
 
-### Install
+### 2) Symfony Installation
 
-1) Select configuration and execute command
+1) Select configuration and execute command (from Docker container)
 * Run this if you are building a traditional web application
 ```
 symfony new ./ --webapp
@@ -67,7 +65,7 @@ symfony new ./ --version=5.4
 
 2) Exit from container terminal by executing `exit` command
 
-### Speed Optimization
+### 3) Speed Optimization
 
 1) Open `docker-compose.yml` and uncomment 2 lines under `volumes:`
 ```
@@ -87,7 +85,7 @@ docker-compose up -d --build
 docker-compose run --rm php composer install
 ```
 
-### Usage
+### 4) Usage
 
 Open http://localhost:8080
 
