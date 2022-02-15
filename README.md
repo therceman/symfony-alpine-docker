@@ -23,35 +23,36 @@ docker-compose up -d --build
 
 ### Initialization
 
-Connect to Docker container
+1) Connect to Docker container
 ```bash
 docker-compose run --rm php /bin/sh
 ```
 
-Check that container meets Symfony Requirements
+2) Check that container meets Symfony Requirements
 ```bash
 symfony check:requirements
 ```
 
 ### Install
 
-Run this if you are building a traditional web application
+1) Select configuration and execute command
+* Run this if you are building a traditional web application
 ```
 symfony new ./ --webapp
 ```
 
-Run this if you are building a microservice, console application or API
+* Run this if you are building a microservice, console application or API
 ```bash
 symfony new ./
 ```
 
-You can add  `--version` parameter to select desired version.<br>
+* Run this if you want to install specific version by providing `--version` parameter.<br>
 Example: `lts`, `4.4` or `next` (version in active development)
 ```bash
 symfony new ./ --version=5.4
 ```
 
-Exit from container terminal by running `exit` command
+2) Exit from container terminal by executing `exit` command
 
 ### Speed Optimization
 
