@@ -29,7 +29,7 @@ APACHE_SYSTEM_PORT=8080
 ## Setup
 
 ### 1) Initialization
-1) Build and Run Docker container
+1) Build and run Docker container
 ```bash
 docker-compose up -d --build
 ```
@@ -39,7 +39,7 @@ docker-compose up -d --build
 docker-compose run --rm php /bin/sh
 ```
 
-3) Check that container meets Symfony Requirements
+3) Check that Docker container meets Symfony requirements
 ```bash
 symfony check:requirements
 ```
