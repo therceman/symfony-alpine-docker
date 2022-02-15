@@ -17,7 +17,8 @@ A Dockerfile with Alpine Linux that is ready for Symfony Application
 ## Configuration
 
 You can open `.env` file to configure the following things
-* NodeJS package manager `yarn` or `npm`
+* NodeJS package manager `yarn` (default) or `npm`. <br>
+ [NPM vs. Yarn: Which Package Manager Should You Choose?](https://www.whitesourcesoftware.com/free-developer-tools/blog/npm-vs-yarn-which-should-you-choose/)
 ```bash
 NODEJS_PACKAGE_MANAGER=yarn
 ```
@@ -90,8 +91,8 @@ docker-compose up -d --build
 
 ### Extra Steps (only for full Symfony Package)
 If you have installed full Symfony Package using cmd `symfony new ./ --webapp`<br>
-You will need to install Node.js dependencies, build Webpack bundle and start Watcher.
-1) Install Node.js dependencies using `yarn` or `npm`
+You will need to install Node.js dependencies and build Webpack bundle.
+1) Install Node.js dependencies using `yarn` or `npm` (if configured)
 ```bash
 docker-compose run --rm app yarn install
 ```
@@ -104,7 +105,7 @@ docker-compose run --rm app yarn encore dev
 docker-compose run --rm app yarn encore dev --watch
 ```
 
-## View
+## View Your App
 
 Navigate to http://localhost:8080 to see your app
 
