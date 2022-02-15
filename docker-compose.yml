@@ -2,7 +2,11 @@ version: '3'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        AMQP_ENABLED: ${AMQP_ENABLED}
+        NODEJS_PACKAGE_MANAGER: ${NODEJS_PACKAGE_MANAGER}
     volumes:
       # Uncomment for speed optimization. See README.md
       # - var:/var/www/html/var
@@ -13,7 +17,6 @@ services:
       - ${APACHE_SYSTEM_PORT}:80
     env_file:
       - .env
-
 
 volumes:
   var:
