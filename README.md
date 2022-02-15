@@ -5,6 +5,7 @@ A Dockerfile with Alpine Linux that is ready for Symfony Application
 - Alpine Linux 3.15
 - Apache/2.4.52 with mod_php
 - PHP 7.4.27 with OPcache
+- Node.js 16.x LTS
 - Composer (latest)
 - Symfony CLI (latest)
 
@@ -12,6 +13,18 @@ A Dockerfile with Alpine Linux that is ready for Symfony Application
 
 * [Docker](https://docs.docker.com/engine/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
+
+## Configuration
+
+You can open `.env` file to configure the following things
+* NodeJS package manager `yarn` or `npm`
+```bash
+NODEJS_PACKAGE_MANAGER=yarn
+```
+* Default Apache port for your application
+```bash
+APACHE_SYSTEM_PORT=8080
+```
 
 ## Build
 

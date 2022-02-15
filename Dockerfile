@@ -1,5 +1,7 @@
 FROM alpine:3.15
 
+# Node.js default Package Manager (overriden by .env file)
+ENV NODEJS_PACKAGE_MANAGER=yarn
 # Opcache Default Config (overriden by .env file)
 ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0
 # Docker Git Identity (needed to for composer)
@@ -29,6 +31,9 @@ RUN apk --update add openssh-client curl git \
     --install-dir=/usr/local/bin --filename=composer && \
     # www dir setup
     mkdir -p /var/www/html/ && chown -R apache:apache /var/www/html
+
+# install NodeJS with Yarn or NPM
+RUN set -eux & apk add --no-cache nodejs ${NODEJS_PACKAGE_MANAGER}
 
 # symfony cli install
 RUN curl -sS https://get.symfony.com/cli/installer | bash && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
