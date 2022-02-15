@@ -1,9 +1,10 @@
 # Symfony Alpine Docker
-A Dockerfile ready for Symfony built on Alpine Linux
+A Dockerfile with Alpine Linux that is ready for Symfony Application
 
 ## Bundle
-- Alpine Linux 3.15 (2021-11-24)
-- Apache/2.4.52 with mod_php (PHP 7.4.27) + OPcache
+- Alpine Linux 3.15
+- Apache/2.4.52 with mod_php
+- PHP 7.4.27 with OPcache
 - Composer (latest)
 - Symfony CLI (latest)
 
@@ -61,8 +62,8 @@ Exit from container terminal by running `exit` command
       - vendor-var-vol:/var/www/html/vendor
       - ./app:/var/www/html/
 ```
-2) Delete `app/vendor` and  folder
-3) Delete `app/var` folder
+2) Delete `app/var` and  folder
+3) Delete `app/vendor` folder
 4) Rebuild Docker Container
 ```bash
 docker-compose up -d --build
@@ -76,4 +77,4 @@ docker-compose run --rm php composer install
 
 Open http://localhost:8080
 
-**Note:** You can configure port in `.env` file
+**Note:** You can configure host port in `.env` file
