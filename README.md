@@ -1,5 +1,5 @@
 # Symfony Alpine Docker
-A Dockerfile ready for Symfony Installation built on Alpine Linux
+A Dockerfile ready for Symfony built on Alpine Linux
 
 ## Bundle
 - Alpine Linux 3.15 (2021-11-24)
@@ -12,27 +12,27 @@ A Dockerfile ready for Symfony Installation built on Alpine Linux
 * [Docker](https://docs.docker.com/engine/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Info & Configuration
-
-Default web address is http://localhost:8080
-
-You can configure port in `.env` file
-
 ## Build
 
-* Build & Run Docker container
 ```bash
 docker-compose up -d --build
 ```
 
 ## Symfony Installation
 
-### Connect to container
+### Initialization
+
+Connect to Docker container
 ```bash
 docker-compose run --rm php /bin/sh
 ```
 
-### Install Latest Version
+Check that container meets Symfony Requirements
+```bash
+symfony check:requirements
+```
+
+### Install
 
 Run this if you are building a traditional web application
 ```
@@ -44,21 +44,36 @@ Run this if you are building a microservice, console application or API
 symfony new ./
 ```
 
-#### Install Specific Symfony Version
-
-Use the most recent LTS version
+You can add  `--version` parameter to select desired version.<br>
+Example: `lts`, `4.4` or `next` (version in active development)
 ```bash
-symfony new ./ --version=lts
+symfony new ./ --version=5.4
 ```
 
-Use the 'next' Symfony version to be released (still in development)
+Exit from container terminal by running `exit` command
+
+### Speed Optimization
+
+1) Open `docker-compose.yml` and uncomment 2 lines under `volumes:`
+```
+    volumes:
+      - vendor-var-vol:/var/www/html/var
+      - vendor-var-vol:/var/www/html/vendor
+      - ./app:/var/www/html/
+```
+2) Delete `app/vendor` and  folder
+3) Delete `app/var` folder
+4) Rebuild Docker Container
 ```bash
-symfony new ./ --version=next
+docker-compose up -d --build
+```
+4) Reinstall Composer dependencies
+```bash
+docker-compose run --rm php composer install
 ```
 
-You can also select an exact specific Symfony version
-```bash
-symfony new ./ --version=4.4
-```
+### Usage
 
+Open http://localhost:8080
 
+**Note:** You can configure port in `.env` file

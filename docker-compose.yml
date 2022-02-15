@@ -4,8 +4,15 @@ services:
   php:
     build: .
     volumes:
-      - ./app/:/var/www/html
+      # Uncomment for speed optimization. See README.md
+      # - vendor-var-vol:/var/www/html/var
+      # - vendor-var-vol:/var/www/html/vendor
+      - ./app:/var/www/html/
     ports: 
       - ${APACHE_SYSTEM_PORT}:80
     env_file:
       - .env
+
+
+volumes:
+  vendor-var-vol:
