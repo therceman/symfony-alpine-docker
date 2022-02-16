@@ -9,7 +9,7 @@ services:
         AMQP_ENABLED: ${AMQP_ENABLED}
         NODEJS_PACKAGE_MANAGER: ${NODEJS_PACKAGE_MANAGER}
     volumes:
-      # Uncomment for speed optimization. See README.md
+      # Uncomment 3 lines when symfony app is installed. See README.md
       # - var:/var/www/html/var
       # - vendor:/var/www/html/vendor
       # - node_modules:/var/www/html/node_modules
