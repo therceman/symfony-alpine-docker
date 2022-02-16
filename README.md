@@ -171,7 +171,7 @@ Navigate to http://localhost:8080 to see your app
 
 Show Apache Logs
 ```bash
-docker app logs
+docker logs app
 ```
 
 Dump ENV vars
