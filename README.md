@@ -1,5 +1,5 @@
 # Symfony Alpine Docker
-A Dockerfile with Alpine Linux that is ready for Symfony Application
+Dockerfile based on Alpine Linux ready for Symfony Application
 
 ## Dockerfile Bundle
 - Alpine Linux 3.15
