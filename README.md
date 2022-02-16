@@ -90,6 +90,8 @@ exit
 ```
 
 ### Speed Optimization
+You need to mount 3 folders as separate volumes in the Docker container.<br>
+This will increase your App, Composer and Node.Js loading/installing speed.
 
 6) Open `docker-compose.yml` and uncomment 3 lines under `volumes:`
 ```
