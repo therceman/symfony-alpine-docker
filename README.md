@@ -198,3 +198,13 @@ Stop Docker & Remove Volumes
 ```bash
 docker-compose down --remove-orphans --volumes
 ```
+
+Remove All Docker Volumes
+```bash
+docker volume prune
+```
+
+Remove All Docker Images
+```bash
+docker image prune
+```
