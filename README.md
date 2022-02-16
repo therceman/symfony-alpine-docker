@@ -1,13 +1,17 @@
 # Symfony Alpine Docker
 A Dockerfile with Alpine Linux that is ready for Symfony Application
 
-## Bundle
+## Dockerfile Bundle
 - Alpine Linux 3.15
 - Apache/2.4.52 with mod_php
 - PHP 7.4.27 with OPcache
 - Node.js 16.x LTS
 - Composer (latest)
 - Symfony CLI (latest)
+
+## Docker Services
+- app (Symfony Container)
+- db (PostgreSQL Database Container)
 
 ## Requirements
 
@@ -17,6 +21,11 @@ A Dockerfile with Alpine Linux that is ready for Symfony Application
 ## Configuration
 
 You can open `.env` file to configure the following things
+* PHP OPCache timestamps validation. Default: 1<br>
+This should be turned off for production instances.
+```bash
+PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
+```
 * NodeJS package manager yarn or npm. Default: yarn<br>
  [NPM vs. Yarn: Which Package Manager Should You Choose?](https://www.whitesourcesoftware.com/free-developer-tools/blog/npm-vs-yarn-which-should-you-choose/)
 ```bash
@@ -30,10 +39,13 @@ APACHE_SYSTEM_PORT=8080
 ```bash
 AMQP_ENABLED=0
 ```
-* PHP OPCache timestamps validation. Default: 1<br>
-This should be turned off for production instances.
+* PostgreSQL database container config
 ```bash
-PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
+POSTGRES_VERSION=13
+POSTGRES_DB=app
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=password
+POSTGRES_EXTERNAL_PORT=15432
 ```
 
 ## Setup
