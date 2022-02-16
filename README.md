@@ -18,6 +18,12 @@ Dockerfile based on Alpine Linux ready for Symfony Application
 * [Docker](https://docs.docker.com/engine/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
+## Clone
+
+```bash
+git clone https://github.com/therceman/symfony-alpine-docker.git && cd symfony-alpine-docker
+```
+
 ## Configuration
 
 You can open `.env` file to configure the following things
