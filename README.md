@@ -63,7 +63,7 @@ docker-compose up -d --build
 ```
 2) Connect to Docker container
 ```bash
-docker-compose run --rm app /bin/sh
+docker-compose run --rm app bash
 ```
 
 3) Check that Docker container meets Symfony requirements
