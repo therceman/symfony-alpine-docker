@@ -21,7 +21,7 @@ Dockerfile based on Alpine Linux ready for Symfony Application
 ## Clone
 
 ```bash
-git clone https://github.com/therceman/symfony-alpine-docker.git && cd symfony-alpine-docker
+git clone https://github.com/therceman/symfony-alpine-docker.git
 ```
 
 ## Configuration
