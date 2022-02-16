@@ -17,14 +17,23 @@ A Dockerfile with Alpine Linux that is ready for Symfony Application
 ## Configuration
 
 You can open `.env` file to configure the following things
-* NodeJS package manager `yarn` (default) or `npm`. <br>
+* NodeJS package manager yarn or npm. Default: yarn<br>
  [NPM vs. Yarn: Which Package Manager Should You Choose?](https://www.whitesourcesoftware.com/free-developer-tools/blog/npm-vs-yarn-which-should-you-choose/)
 ```bash
 NODEJS_PACKAGE_MANAGER=yarn
 ```
-* Default Apache port for your application
+* Apache port for your application. Default: 8080
 ```bash
 APACHE_SYSTEM_PORT=8080
+```
+* PHP AMQP extension for message queue (e.g. RabbitMQ). Default: 0
+```bash
+AMQP_ENABLED=0
+```
+* PHP OPCache timestamps validation. Default: 1<br>
+This should be turned off for production instances.
+```bash
+PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
 ```
 
 ## Setup
