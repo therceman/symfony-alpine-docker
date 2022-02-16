@@ -10,8 +10,8 @@ Dockerfile based on Alpine Linux ready for Symfony Application
 - Symfony CLI (latest)
 
 ## Docker Services
-- app (Symfony Container)
-- db (PostgreSQL Database Container)
+- app - Symfony Container
+- pdb - PostgreSQL Database Container
 
 ## Requirements
 
@@ -27,31 +27,34 @@ git clone https://github.com/therceman/symfony-alpine-docker.git
 ## Configuration
 
 You can open `.env` file to configure the following things
-* PHP OPCache timestamps validation. Default: 1<br>
+* PHP OPCache timestamps validation.<br>
 This should be turned off for production instances.
 ```bash
 PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
 ```
-* NodeJS package manager yarn or npm. Default: yarn<br>
+* NodeJS package manager: yarn or npm.<br>
  [NPM vs. Yarn: Which Package Manager Should You Choose?](https://www.whitesourcesoftware.com/free-developer-tools/blog/npm-vs-yarn-which-should-you-choose/)
 ```bash
 NODEJS_PACKAGE_MANAGER=yarn
 ```
-* Apache port for your application. Default: 8080
+* Apache ports for your application.
 ```bash
-APACHE_SYSTEM_PORT=8080
+APACHE_EXT_PORT=8080
+APACHE_PORT=80
 ```
-* PHP AMQP extension for message queue (e.g. RabbitMQ). Default: 0
+* PHP AMQP extension for message queue (e.g. RabbitMQ).
 ```bash
 AMQP_ENABLED=0
 ```
-* PostgreSQL database container config
+* PostgreSQL database container config.
 ```bash
-POSTGRES_VERSION=13
-POSTGRES_DB=app
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=password
-POSTGRES_EXTERNAL_PORT=15432
+DB_VERS=13
+DB_HOST=db
+DB_NAME=app
+DB_USER=psql
+DB_PASS=pass
+DB_PORT=5432
+DB_EXT_PORT=15432
 ```
 
 ## Setup
@@ -118,6 +121,30 @@ docker-compose run --rm app composer install
 docker-compose up -d --build
 ```
 
+### PostgreSQL Database Connection Setup
+Make sure you have ORM Pack and Maker bundle installed. <br>
+These dependencies are installed in full Symfony Package by default.<br>
+
+1) Install Maker Bundle
+```bash
+docker-compose run --rm app composer require --dev symfony/maker-bundle
+```
+
+2) Install ORM Pack
+```bash
+docker-compose run --rm app composer require symfony/orm-pack
+```
+**Note:** Hit `n` when asked about Docker config recipes
+
+3) Open `app/.env` and replace DATABASE_URL with this:
+```bash
+DATABASE_URL="postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}?serverVersion=${DB_VERS}&charset=utf8"
+```
+4) Test Database Connection
+```bash
+docker-compose run --rm app symfony console dbal:run-sql 'SELECT * FROM pg_am'
+```
+
 ### Extra Steps (only for full Symfony Package)
 If you have installed full Symfony Package using cmd `symfony new ./ --webapp`<br>
 You will need to install Node.js dependencies and build Webpack bundle.
@@ -138,4 +165,36 @@ docker-compose run --rm app yarn encore dev --watch
 
 Navigate to http://localhost:8080 to see your app
 
-**Note:** You can configure host port in `.env` file
+**Note:** You can configure Apache external host port in `.env` file
+
+## Additional Commands
+
+Show Apache Logs
+```bash
+docker app logs
+```
+
+Dump ENV vars
+```bash
+docker-compose run --rm app symfony console debug:container --env-vars
+```
+
+Reset DB
+```bash
+docker-compose run --rm app symfony console doctrine:database:drop --force
+```
+
+Create DB
+```bash
+docker-compose run --rm app symfony console doctrine:database:create
+```
+
+Stop Docker
+```bash
+docker-compose down --remove-orphans
+```
+
+Stop Docker & Remove Volumes
+```bash
+docker-compose down --remove-orphans --volumes
+```

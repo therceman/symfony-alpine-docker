@@ -2,6 +2,8 @@ FROM alpine:3.15
 
 #### ARG & ENV
 
+# Apache Port (overriden by .env file)
+ARG APACHE_PORT=80
 # AMQP Extension Support (overriden by .env file)
 ARG AMQP_ENABLED=0
 # Node.js default Package Manager (overriden by .env file)
@@ -31,15 +33,15 @@ RUN apk --update add openssh-client curl git dos2unix \
     php-posix php-xmlwriter \
     # db modules
     php-pdo php-pdo_pgsql php-pgsql && \
-    # other magic
+    # remove apk cache
     rm -f /var/cache/apk/* && \
     # composer install
     curl -sS https://getcomposer.org/installer | php -- \
     --install-dir=/usr/local/bin --filename=composer && \
-    # www dir setup
+    # website root dir setup
     mkdir -p /var/www/html/ && chown -R apache:apache /var/www/html
 
-# install NodeJS with Yarn or NPM
+# install Node.js with Yarn or NPM
 RUN set -eux & apk add --no-cache nodejs ${NODEJS_PACKAGE_MANAGER}
 
 # install AMQP
@@ -59,9 +61,10 @@ COPY etc/apache2/sites/ /etc/apache2/sites/
 COPY etc/php/php.ini /etc/php7/php.ini
 COPY scripts/entrypoint.sh /opt/entrypoint.sh
 
+# fix line endings. Needed for Windows users
 RUN dos2unix /opt/entrypoint.sh
 
-EXPOSE 80
+EXPOSE ${APACHE_PORT}
 
 WORKDIR /var/www/html/
 
