@@ -68,4 +68,6 @@ EXPOSE ${APACHE_PORT}
 
 WORKDIR /var/www/html/
 
+RUN ["chmod", "+x", "/opt/entrypoint.sh"]
+
 CMD ["/opt/entrypoint.sh"]
