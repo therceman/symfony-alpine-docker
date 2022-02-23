@@ -19,7 +19,9 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0
 
 RUN apk add bash
 
-RUN apk --update add openssh-client curl git dos2unix \ 
+RUN apk --update add openssh-client curl git dos2unix \
+    # composer performance module
+    php-curl \
     # core php modules
     php-apache2 php-cli php-phar php-openssl \
     # performance php modules
