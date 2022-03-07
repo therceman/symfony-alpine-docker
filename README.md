@@ -199,6 +199,11 @@ Stop Docker & Remove Volumes
 docker-compose down --remove-orphans --volumes
 ```
 
+Stop All Containers
+```bash
+docker kill $(docker ps -q)
+```
+
 Remove All Docker Volumes
 ```bash
 docker volume prune
