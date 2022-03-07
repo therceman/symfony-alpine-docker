@@ -213,3 +213,8 @@ Remove All Docker Images
 ```bash
 docker image prune
 ```
+
+Remove All Volumes and Images
+```bash
+docker image prune && docker volume prune
+```
